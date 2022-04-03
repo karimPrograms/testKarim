@@ -1,0 +1,157 @@
+* {
+    font-family: Poppins, sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navBar {
+    width: 100%;
+    height: 40px;
+    box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.1);
+    background-color: whitesmoke;
+  }
+  .container {
+    width: 90%;
+    margin: auto;
+    padding: auto;
+  }
+  .flex-bar {
+    list-style-type: none;
+    padding-top: 8px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  section {
+    position: relative;
+    width: 100%;
+    height: 93vh;
+    display: flex;
+  }
+  section .myImg {
+    position: relative;
+    width: 50%;
+    height: 100%;
+  }
+  section .myImg::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(225deg, #adacac, #999494);
+    z-index: 1;
+    mix-blend-mode: screen;
+  }
+  
+  section .myImg img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .flex-bar a {
+    text-decoration: none;
+    font-size: 18px;
+    padding-right: 15px;
+    color: #63a860;
+  }
+  .flex-bar a:hover {
+    color: #607d8b;
+  }
+  
+  section .myLogin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+  }
+  .myForm {
+    width: 50%;
+  }
+  .myForm h2 {
+    color: #63a860;
+    font-weight: 600;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    border-bottom: 4px solid #607d8b;
+    display: inline-block;
+    letter-spacing: 1px;
+  }
+  section .myLogin .myForm .inputs {
+    margin-bottom: 20px;
+  }
+  section .myLogin .myForm .inputs label {
+    font-size: 16px;
+    margin-bottom: 5px;
+    display: inline-block;
+    color: #63a860;
+    font-weight: 300;
+    font-size: 16px;
+    letter-spacing: 1px;
+  }
+  section .myLogin .myForm .inputs input {
+    width: 100%;
+    padding: 10px 20px;
+    outline: none;
+    font-weight: 400;
+    border: 1px solid #63a860;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: #63a860;
+    background: transparent;
+    border-radius: 30px;
+  }
+  #myBtn {
+    background-color: #607d8b;
+    color: wheat;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  #myBtn:hover {
+    background-color: #49595e;
+  }
+  #myBtn:active {
+    transform: scale(0.98);
+  }
+  .inputs > p {
+    color: #607d8b;
+  }
+  .inputs a {
+    color: #63a860;
+  }
+  .inputs a:hover {
+    color: green;
+  }
+  @media (max-width: 768px) {
+    section .myImg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    section .myLogin {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    section .myLogin .myForm {
+      width: 80%;
+      padding: 40px;
+      background-color: rgb(255 255 255/0.9);
+      border-radius: 10px;
+      margin: 50px;
+    }
+  }
+  
