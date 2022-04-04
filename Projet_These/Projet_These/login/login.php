@@ -69,6 +69,7 @@ if (isset($_POST['Submit'])){
                 name="Username"
                 id="user"
                 placeholder="Entrer Votre Email ou Nom d'Utilisateur"
+		required
               />
             </div>
             <div class="inputs">
@@ -78,6 +79,7 @@ if (isset($_POST['Submit'])){
                 name="Password"
                 id="Password"
                 placeholder="Entrer Votre Mot de Passe"
+		required
               />
             </div>
             <div class="inputs">
