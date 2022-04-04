@@ -108,6 +108,11 @@
     background: transparent;
     border-radius: 30px;
   }
+  ::placeholder {
+  color: #607d8b;
+  width: 100vw;
+  letter-spacing: normal;
+  }
   #myBtn {
     background-color: #607d8b;
     color: wheat;
