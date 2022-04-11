@@ -22,7 +22,7 @@
             <label for="type"> Type de produit:</label>
             Médicament
             <input type="radio" id="type" name="typeP" />
-            Matérial Pharmaceutiques
+            MatérialPharm
             <input type="radio" name="typeP" id="type" />
           </div>
           <div class="dataInput">
