@@ -3,10 +3,9 @@ var field = document.getElementById("mili");
 
 arr.forEach((radio) => {
   radio.addEventListener("change", () => {
-    if (radio.value == "Matérial Pharmaceutiques") {
+    if (radio.value == "Material Pharmaceutique") {
       field.disabled = true;
-      field.style.backgroundColor = "#a7b1c2";
-      field.placeholder = "Disabled!";
+      field.style.backgroundColor = "#ccc";
     } else {
       field.disabled = false;
       field.style.background = "transparent";
