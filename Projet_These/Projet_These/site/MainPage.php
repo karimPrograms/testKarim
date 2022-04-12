@@ -1,10 +1,36 @@
-<?php 
-include '../login/config.php';
-
+<?php
+include '../login/config.php'; 
 session_start();
 
 if (!isset($_SESSION['username'])) {
-    header("Location: index.php");
+    header("Location: ../login/login.php");
+}
+
+if (isset($_POST['Submit'])){
+  $Nom = $_POST['NomP'];
+  $Prix = $_POST['Prix'];
+  $Dispo = $_POST['Dispo'];
+  $Type = $_POST['typeP'];
+  $PharmaID = $_SESSION['username'];
+
+  if($Type == 'Material Pharmaceutique'){
+    $mili = 0;
+  }else{
+    $mili = $_POST['Milligramme'];
+  }
+
+  $sql2 = "INSERT INTO medicament (pharma_Id, Type, Nom, Miligramme, Prix, Disponible)
+            VALUES ('$PharmaID ', '$Type', '$Nom', '$mili', '$Prix', '$Dispo')";
+  $result2 = $mysqli->query($sql2);
+  if ($result2){
+    $Nom = "";
+    $Prix = "";
+    $Dispo = "";
+    $Type = "";
+    header("Location: MainPage.php");
+  }else{
+    echo"<script>alert('oops! erreur')</script>";
+  }
 }
 
 ?>
@@ -14,7 +40,11 @@ if (!isset($_SESSION['username'])) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="mystyle.css" />
+    <style>
+      <?php
+        include 'mystyle.css'
+      ?>
+    </style>
     <title>Welcome</title>
   </head>
   <body>
@@ -116,7 +146,8 @@ if (!isset($_SESSION['username'])) {
             </thead>
 
             <?php
-            $sql = "SELECT Type, Nom, Miligramme, Prix, Disponible FROM medicament";
+            $PharmaID = $_SESSION['username'];
+            $sql = "SELECT Type, Nom, Miligramme, Prix, Disponible FROM medicament where pharma_Id='$PharmaID'";
             $result = $mysqli->query($sql);
 
             if($result->num_rows > 0){
