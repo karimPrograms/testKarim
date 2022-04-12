@@ -14,13 +14,12 @@ if (isset($_POST['Submit'])){
   $usermail = $_POST['Username'];
   $userpass = $_POST['Password'];
 
-
   $sql = "SELECT * FROM pharma_login WHERE (username='$username' OR email = '$usermail') AND password='$userpass'";
   $result = $mysqli->query($sql);
 
   if($result->num_rows > 0){
     $row = $result->fetch_assoc();
-		$_SESSION['username'] = $row['username'];
+		$_SESSION['username'] = $row['pharma_ID'];
 		header("Location: ../site/MainPage.php");
   }else{
     echo "<script>alert('Woops! Email or Mot De Passe uncorrect.')</script>";
