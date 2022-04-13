@@ -56,7 +56,7 @@ if (isset($_POST['Submit'])){
       </div>
     </nav>
     
-    
+   <div class="flexTable">
     <div class="myWebSite">
       <div class="formulaire">
         <div class="titre"><h2>Formulaire</h2></div>
@@ -164,7 +164,7 @@ if (isset($_POST['Submit'])){
           </table>
         </div>
       </div>
-
+     </div>
     <script src="./index.js"></script>
   </body>
 </html>
