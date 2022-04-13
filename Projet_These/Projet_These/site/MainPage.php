@@ -142,19 +142,20 @@ if (isset($_POST['Submit'])){
                 <th>Milligramme</th>
                 <th>prix</th>
                 <th>Disponible</th>
+                <th>Supprimer</th>
               </tr>
             </thead>
 
             <?php
             $PharmaID = $_SESSION['username'];
-            $sql = "SELECT Type, Nom, Miligramme, Prix, Disponible FROM medicament where pharma_Id='$PharmaID'";
+            $sql = "SELECT Med_Id,Type, Nom, Miligramme, Prix, Disponible FROM medicament where pharma_Id='$PharmaID'";
             $result = $mysqli->query($sql);
 
             if($result->num_rows > 0){
               while($row = $result->fetch_assoc()){
                 echo "<tr><td>". $row["Type"]. "</td><td>". $row["Nom"].
                 "</td><td>". $row["Miligramme"]."</td><td>". $row["Prix"].
-                "</td><td>". $row["Disponible"]."</td></tr>";
+                "</td><td>". $row["Disponible"]."</td><td><a href='delete.php?id=". $row["Med_Id"]."' id='btn'>Supprimer</a></td></tr>";
               }
               echo "</table>";
             }else{
