@@ -43,6 +43,7 @@ body {
 }
 
 .myWebSite .formulaire {
+  border: 3px solid lightgray;
   max-width: 600px;
   width: 100%;
   background-color: white;
@@ -208,11 +209,14 @@ form .radioInput input {
   margin-right: 25px;
 }
 .MedicaleTable .Mytable {
-  max-width: 600px;
+  border: 3px solid lightgray;
+  max-width: 750px;
   width: 100%;
   background-color: white;
   padding: 20px;
   border-radius: 20px;
+  max-height: 550px;
+  overflow:auto;
 }
 
 table,
@@ -221,17 +225,28 @@ td {
   color: #607d8b;
   border-bottom: 1px solid #ddd;
   border-collapse: collapse;
-  padding: 15px;
+  padding: 1rem 0.7rem; 
   text-align: left;
   width: 100%;
   height: 100%;
   font-size: 16px;
   cursor: pointer;
+  text-align: left;
+}
+table{
+  box-shadow: 0 5px 10px lightgray;
+}
+thead{
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 th {
-  color: #63a860;
-  background-color: white;
+  text-transform: uppercase;
+  color: white;
+  background-color: #607d8b;
+  font-size: 0.8rem;
+  letter-spacing: 0.1rem;
 }
+
 
 tr:nth-child(even) {
   background-color: #f2f2f2;
@@ -240,13 +255,40 @@ tr:nth-child(odd) {
   background-color: white;
 }
 tr:hover {
-  background-color: #6af865;
+  background-color: lightgray;
 }
+
+.MedicaleTable .Mytable::-webkit-scrollbar{
+  width: 5px;
+}
+
+.MedicaleTable .Mytable::-webkit-scrollbar-track{
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  margin-block: .7em;
+}
+
+.MedicaleTable .Mytable::-webkit-scrollbar-thumb{
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+}
+
+#btn{  
+  text-decoration: none;  
+  color: #FFF;  
+  background-color: #f3513f;  
+  padding: 5px 20px;  
+  border-radius: 3px;  
+}  
+#btn:hover{  
+  background-color: #ac392c;  
+}
+
 /********** END TABLE **********/
 .flexTable {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 
