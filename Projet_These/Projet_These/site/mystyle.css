@@ -1,0 +1,326 @@
+* {
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-image: url("../login/images/background2.jpg");
+}
+
+.navBar {
+  width: 100%;
+  height: 40px;
+  box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.1);
+  background-color: whitesmoke;
+}
+.container {
+  width: 90%;
+  margin: auto;
+  padding: auto;
+}
+.flex-bar {
+  list-style-type: none;
+  padding-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+}
+.flex-bar a {
+  text-decoration: none;
+  font-size: 18px;
+  padding-right: 15px;
+  color: #63a860;
+}
+.flex-bar a:hover {
+  color: #607d8b;
+}
+.myWebSite {
+  display: flex;
+  height: 93.5vh;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.myWebSite .formulaire {
+  border: 3px solid lightgray;
+  max-width: 600px;
+  width: 100%;
+  background-color: white;
+  padding: 25px 30px;
+  border-radius: 20px;
+}
+.formulaire .titre {
+  color: #63a860;
+  font-weight: 600;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  border-bottom: 4px solid #607d8b;
+  display: inline-block;
+  letter-spacing: 1px;
+}
+.myWebSite .formulaire form {
+  width: 90%;
+  height: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dataInput label {
+  font-size: 16px;
+  margin-bottom: 5px;
+  display: inline-block;
+  color: #63a860;
+  font-weight: 300;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.radioInput .labelname {
+  font-size: 16px;
+  margin-bottom: 5px;
+  display: inline-block;
+  color: #63a860;
+  font-weight: 300;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+/********** Radio Buttons ***********/
+/* Customize the label (the container) */
+.radiochoice {
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #607d8b;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.radiochoice input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  height: 16px;
+  width: 16px;
+  background-color: #cfe7ce;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.radiochoice:hover input ~ .checkmark {
+  background-color: #9bcc99;
+}
+
+/* When the radio button is checked, add a blue background */
+.radiochoice input:checked ~ .checkmark {
+  background-color: #63a860;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.radiochoice input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.radiochoice .checkmark:after {
+  top: 5.5px;
+  left: 5.5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: white;
+}
+/******** END RADIO BUTTONS **********/
+
+.myWebSite .formulaire form .dataInput {
+  margin-bottom: 15px;
+}
+.myWebSite .formulaire form .dataInput input {
+  width: 100%;
+  padding: 10px 20px;
+  outline: none;
+  font-weight: 400;
+  border: 1px solid #63a860;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: #607d8b;
+  background: transparent;
+  border-radius: 30px;
+}
+::placeholder {
+  color: #607d8b;
+  width: 100vw;
+  letter-spacing: normal;
+}
+.myWebSite .formulaire form .radioInput {
+  display: flex;
+  width: 100%;
+  margin: 10px 0;
+}
+
+form .radioInput input {
+  margin-right: 15px;
+  margin-left: 15px;
+}
+#myBtn {
+  background-color: #607d8b;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+#myBtn:hover {
+  background-color: #49595e;
+}
+#myBtn:active {
+  transform: scale(0.98);
+}
+
+/******* START TABLE ********/
+.MedicaleTable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 25px;
+}
+.MedicaleTable .Mytable {
+  border: 3px solid lightgray;
+  max-width: 780px;
+  width: 100%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 20px;
+  max-height: 550px;
+  overflow:auto;
+}
+
+table,
+th,
+td {
+  color: #607d8b;
+  border-bottom: 1px solid #ddd;
+  border-collapse: collapse;
+  padding: 0.8rem 0.4rem; 
+  text-align: left;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: left;
+}
+table{
+  box-shadow: 0 5px 10px lightgray;
+}
+thead{
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+th {
+  text-transform: uppercase;
+  color: white;
+  background-color: #607d8b;
+  font-size: 0.8rem;
+  letter-spacing: 0.1rem;
+}
+
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+tr:nth-child(odd) {
+  background-color: white;
+}
+tr:hover {
+  background-color: lightgray;
+}
+
+.MedicaleTable .Mytable::-webkit-scrollbar{
+  width: 5px;
+}
+
+.MedicaleTable .Mytable::-webkit-scrollbar-track{
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  margin-block: .7em;
+}
+
+.MedicaleTable .Mytable::-webkit-scrollbar-thumb{
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+}
+
+#btn{  
+  text-decoration: none;  
+  color: #FFF;  
+  background-color: #f3513f;  
+  padding: 10px 12px;  
+  border-radius: 3px;  
+}  
+#btn:hover{  
+  background-color: #ac392c;  
+}
+
+/********** END TABLE **********/
+.flexTable {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .myWebSite .formulaire {
+    max-width: 100%;
+  }
+  .myWebSite .formulaire form .dataInput {
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  .myWebSite .formulaire form .radioInput {
+    width: 100%;
+  }
+  .flexTable {
+    display: flex;
+    flex-direction: column;
+  }
+  .MedicaleTable {
+    max-width: 100%;
+    margin-left: 25px;
+  }
+  .MedicaleTable .Mytable {
+    max-width: 100%;
+  }
+  .MedicaleTable .Mytable .Table {
+    width: 100%;
+  }
+  table,
+  th,
+  td {
+    width: 100%;
+  }
+}
+  
