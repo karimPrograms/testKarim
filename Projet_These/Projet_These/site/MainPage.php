@@ -63,26 +63,43 @@ if (isset($_POST['Submit'])){
         </button>
       </div>
       <div class="modal-body">
-  <form>
+
+      <?php
+      include '../login/config.php';
+      $PharmaID = $_SESSION['username'];
+
+        $sql= "SELECT Name, Contact_Number1, Contact_Number2, Location, Email FROM pharma_info where Id='$PharmaID'";
+        $result = $mysqli->query($sql);         
+          if($result->num_rows > 0){
+            $row = $result->fetch_assoc();
+              $pharmname = $row["Name"];
+              $pharmPhone1 = $row["Contact_Number1"];
+              $pharmPhone2 = $row["Contact_Number2"];
+              $pharmLocation = $row["Location"];
+              $pharmEmail = $row["Email"];
+            }
+      ?>
+
+  <form action="informations.php" method="POST">
         <div class="form-group">
            <label for="nameInput">Nom de pharmacie:</label>
-           <input type="text" name="pharmName" class="form-control" id="nameInput" placeholder="Enter Name">
+           <input type="text" name="pharmName" class="form-control" id="nameInput" placeholder="Enter Name" value="<?= $pharmname ?>">
         </div>
      <div class="form-group">
           <label for="InputNumber1">Contact Number1:</label>
-          <input type="Number" name="pharmNum1" class="form-control" id="InputNumber1" placeholder="Contact Number1">
+          <input type="Number" name="pharmNum1" class="form-control" id="InputNumber1" placeholder="Contact Number1" value="<?= $pharmPhone1 ?>">
     </div>
     <div class="form-group">
           <label for="InputNumber2">Contact Number2:</label>
-          <input type="Number" name="pharmNum2" class="form-control" id="InputNumber2" placeholder="Contact Number2">
+          <input type="Number" name="pharmNum2" class="form-control" id="InputNumber2" placeholder="Contact Number2" value="<?= $pharmPhone2 ?>">
     </div>
     <div class="form-group">
           <label for="Adresse">Adresse:</label>
-          <input type="text" name="pharmAdr" class="form-control" id="Adresse" placeholder="Tapez l'adresse">
+          <input type="text" name="pharmAdr" class="form-control" id="Adresse" placeholder="Tapez l'adresse" value="<?= $pharmLocation ?>">
     </div>
     <div class="form-group">
     <label for="Email">Email:</label>
-    <input type="email" name="pharmEmail" class="form-control" id="Email" placeholder="Enter email">
+    <input type="email" name="pharmEmail" class="form-control" id="Email" placeholder="Enter email" value="<?= $pharmEmail ?>">
   </div>
  
       </div>
@@ -97,8 +114,8 @@ if (isset($_POST['Submit'])){
     <nav class="navBar">
       <div class="container">
         <ul class="flex-bar">
-          <li><button type="button" class="btn btn-primary editInfo" data-toggle="modal" data-target="#editModal" id="navBtn">About Us</button></li>
-          <li><a href="../login/logout.php">Logout</a></li> 
+          <li><button type="button" class="btn btn-primary editInfo" data-toggle="modal" data-target="#editModal" id="navBtn">Ma Pharmacie</button></li>
+          <li><a href="../login/logout.php">Deconnecter</a></li> 
         </ul>
       </div>
     </nav>
@@ -185,7 +202,10 @@ if (isset($_POST['Submit'])){
         <div class="Mytable">
         <form action="" method="post">   
          <div class="searching">
-    <input class="form-control mr-sm-2" type="search" placeholder="rechercher par nom" name="Rechercher" id="searchBox" />
+
+        <?php $search = (isset($_POST['Rechercher'])) ? htmlentities($_POST['Rechercher']) : ''; ?>
+
+    <input class="form-control mr-sm-2" type="search" placeholder="rechercher par nom" name="Rechercher" id="searchBox" value="<?= $search ?>"/>
     <input class="btn btn-outline-success my-2 my-sm-0" type="submit" name="searchsub" value="rechercher" />
          </div>
          </form>
@@ -194,23 +214,28 @@ if (isset($_POST['Submit'])){
             <?php    
           
             $PharmaID = $_SESSION['username'];
+
           if (isset($_POST['searchsub'])){
            $valueToSearch = $_POST['Rechercher'];
            if($valueToSearch==""){
             $query= "SELECT Med_Id, Type, Nom, Miligramme, Prix, Disponible FROM medicament where pharma_Id='$PharmaID'";
-            $search_result=filtrerTable($query);
+            $var1 = 1;
+            $search_result=filtrerTable($query, $var1);
            }
            else{
-           $query ="SELECT Med_Id, Type, Nom, Miligramme, Prix, Disponible FROM medicament where Nom LIKE '%$valueToSearch%'";
-           $search_result=filtrerTable($query);
+           $query ="SELECT Med_Id, Type, Nom, Miligramme, Prix, Disponible FROM medicament where (Nom LIKE '%$valueToSearch%' and pharma_Id='$PharmaID')";
+           $var1 = 0;
+           $search_result=filtrerTable($query, $var1);
            }
          }
             else{
                $query= "SELECT Med_Id, Type, Nom, Miligramme, Prix, Disponible FROM medicament where pharma_Id='$PharmaID'";
-               $search_result=filtrerTable($query);
+               $var1 = 1;
+               $search_result=filtrerTable($query, $var1);
+               
             }
      
-            function filtrerTable($query)
+            function filtrerTable($query, $var1)
             { include '../login/config.php';
               
               $filtrer=$mysqli->query($query);
@@ -239,11 +264,18 @@ if (isset($_POST['Submit'])){
                   </tr>";
                 }
                 echo "</table>";
-              }else{
+              }elseif($var1 == 0){
                 echo "
                 <div class=mainresult>
                 <div class=resultat>
                   le nom n'exist pas !
+                </div>
+                </div>";
+              } else{
+                echo "
+                <div class=mainresult>
+                <div class=resultat>
+                  Il ne y'a Aucun medicament dans la base de donnée 
                 </div>
                 </div>";
               }
@@ -271,7 +303,7 @@ if (isset($_POST['Submit'])){
 
                     <div class="modal-body">
 
-                        <input type="hidden" name="update_id" id="update_id">
+                        <input type="hidden" name="update_idn" id="update_id">
 
                         <div class="form-group">
                           <div class="radioInput">
@@ -372,22 +404,22 @@ if (isset($_POST['Submit'])){
 
                 console.log(data);
 
-                var selectedVal = "";
-                var selected = $("input[type='radio'][name='typeP']:checked");
-                if (selected.length > 0) {
-                    selectedVal = selected.val();
-                }
                 if (data[0] == "Medicament"){ $("#typeP1").prop("checked", true);}
                 else{$("#typeP2").prop("checked", true);}
                 $('#NomP').val(data[1]);
                 $('#miliP').val(data[2]);
                 $('#PrixP').val(data[3]);
-                if(data[4] == "Oui"){$("#typeD1").prop("checked", true);}
-                else{$("#typeD2").prop("checked", true);}
-                $('#update_id').val(event.srcElement.id);
+                if(data[4] == "Oui"){
+                  $("#typeD1").prop("checked", true);
+                }
+                else{
+                  $("#typeD2").prop("checked", true);
+                }
+                $('#update_id').val($(this).attr('id'));
             });
         });
     </script>
+
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   </body>
