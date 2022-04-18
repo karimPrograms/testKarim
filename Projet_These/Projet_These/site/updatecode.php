@@ -21,7 +21,6 @@ if(isset($_POST['updatedata'])){
 
         if($query_run)
         {
-            echo '<script> alert("Data Updated"); </script>';
             header("Location:MainPage.php");
         }
         else
