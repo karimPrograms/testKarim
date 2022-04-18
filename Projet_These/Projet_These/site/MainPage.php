@@ -48,18 +48,62 @@ if (isset($_POST['Submit'])){
     <title>Welcome</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   </head>
   <body>
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modifier les informations:</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+  <form>
+        <div class="form-group">
+           <label for="nameInput">Nom de pharmacie:</label>
+           <input type="text" name="pharmName" class="form-control" id="nameInput" placeholder="Enter Name">
+        </div>
+     <div class="form-group">
+          <label for="InputNumber1">Contact Number1:</label>
+          <input type="Number" name="pharmNum1" class="form-control" id="InputNumber1" placeholder="Contact Number1">
+    </div>
+    <div class="form-group">
+          <label for="InputNumber2">Contact Number2:</label>
+          <input type="Number" name="pharmNum2" class="form-control" id="InputNumber2" placeholder="Contact Number2">
+    </div>
+    <div class="form-group">
+          <label for="Adresse">Adresse:</label>
+          <input type="text" name="pharmAdr" class="form-control" id="Adresse" placeholder="Tapez l'adresse">
+    </div>
+    <div class="form-group">
+    <label for="Email">Email:</label>
+    <input type="email" name="pharmEmail" class="form-control" id="Email" placeholder="Enter email">
+  </div>
+ 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        <button type="submit" name="EditInfo" class="btn btn-primary">Sauvgarder</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
     <nav class="navBar">
       <div class="container">
         <ul class="flex-bar">
-          <li><a href="informations.php">Modifier les Informations de la Pharmacie</a></li>
-          <li><a href="../login/logout.php">Deconnecter</a></li>
+          <li><button type="button" class="btn btn-primary editInfo" data-toggle="modal" data-target="#editModal" id="navBtn">About Us</button></li>
+          <li><a href="../login/logout.php">Logout</a></li> 
         </ul>
       </div>
     </nav>
     
-   <div class="flexTable">
+  <div class="flexTable">
     <div class="myWebSite">
       <div class="formulaire">
         <div class="titre"><h2>Formulaire</h2></div>
@@ -117,12 +161,12 @@ if (isset($_POST['Submit'])){
             <label for="Dispo" class='labelname'>Disponible:</label>
 
             <label class="radiochoice"> Oui 
-              <input type="radio" id="typeD" name="Dispo" checked="checked" value="Oui"/>
+              <input type="radio" id="type" name="Dispo" checked="checked" value="Oui"/>
               <span class="checkmark"></span>
             </label>
 
             <label class="radiochoice"> Non
-              <input type="radio" id="typeD" name="Dispo" value="Non"/>
+              <input type="radio" id="type" name="Dispo" value="Non"/>
               <span class="checkmark"></span>
             </label>
           </div>
@@ -135,50 +179,84 @@ if (isset($_POST['Submit'])){
       </div>
     </div>
 
+
+ 
     <div class="MedicaleTable">
         <div class="Mytable">
-          <table class="Table">
-            <thead>
-              <tr>
-                <th>Type</th>
-                <th>Nom</th>
-                <th>Milligramme</th>
-                <th>prix</th>
-                <th>Disponible</th>
-                <th>Supprimer</th>
-                <th>Modifier</th>
-              </tr>
-            </thead>
-
-            <?php
+        <form action="" method="post">   
+         <div class="searching">
+    <input class="form-control mr-sm-2" type="search" placeholder="rechercher par nom" name="Rechercher" id="searchBox" />
+    <input class="btn btn-outline-success my-2 my-sm-0" type="submit" name="searchsub" value="rechercher" />
+         </div>
+         </form>
+         <table class="Table">
+         
+            <?php    
+          
             $PharmaID = $_SESSION['username'];
-            $sql = "SELECT Med_Id,Type, Nom, Miligramme, Prix, Disponible FROM medicament where pharma_Id='$PharmaID'";
-            $result = $mysqli->query($sql);
-
-            if($result->num_rows > 0){
-              while($row = $result->fetch_assoc()){
-                echo "<tr>
-                <td>". $row["Type"]. "</td>
-                <td>". $row["Nom"]. "</td>
-                <td>". $row["Miligramme"]."</td>
-                <td>". $row["Prix"]."</td>
-                <td>". $row["Disponible"]."</td>
-                <td><a href='delete.php?id=". $row["Med_Id"]."' id='btn'>Supprimer</a></td>
-                <td> <button type='button' id=". $row["Med_Id"]." class='btn btn-success editbtn'> Modifier </button></td>
-                </tr>";
+          if (isset($_POST['searchsub'])){
+           $valueToSearch = $_POST['Rechercher'];
+           if($valueToSearch==""){
+            $query= "SELECT Med_Id, Type, Nom, Miligramme, Prix, Disponible FROM medicament where pharma_Id='$PharmaID'";
+            $search_result=filtrerTable($query);
+           }
+           else{
+           $query ="SELECT Med_Id, Type, Nom, Miligramme, Prix, Disponible FROM medicament where Nom LIKE '%$valueToSearch%'";
+           $search_result=filtrerTable($query);
+           }
+         }
+            else{
+               $query= "SELECT Med_Id, Type, Nom, Miligramme, Prix, Disponible FROM medicament where pharma_Id='$PharmaID'";
+               $search_result=filtrerTable($query);
+            }
+     
+            function filtrerTable($query)
+            { include '../login/config.php';
+              
+              $filtrer=$mysqli->query($query);
+              if($filtrer->num_rows > 0){
+               echo "   
+               <thead>
+               <tr>
+                 <th>Type</th>
+                 <th>Nom</th>
+                 <th>Milligramme</th>
+                 <th>prix</th>
+                 <th>Disponible</th>
+                 <th>supprimer</th>
+                 <th>modifier</th>
+               </tr>
+             </thead>";
+                while($row = $filtrer->fetch_assoc()){
+                  echo "<tr>
+                  <td>". $row["Type"]. "</td>
+                  <td>". $row["Nom"]. "</td>
+                  <td>". $row["Miligramme"]."</td>
+                  <td>". $row["Prix"]."</td>
+                  <td>". $row["Disponible"]."</td>
+                  <td><a href='delete.php?id=". $row["Med_Id"]."' id='btn'><ion-icon name=trash-outline></ion-icon></a></td>
+                  <td> <button type='button' id=". $row["Med_Id"]." class='btn btn-success editbtn'> <ion-icon name=create-sharp></ion-icon> </button></td>
+                  </tr>";
+                }
+                echo "</table>";
+              }else{
+                echo "
+                <div class=mainresult>
+                <div class=resultat>
+                  le nom n'exist pas !
+                </div>
+                </div>";
               }
-              echo "</table>";
-            }else{
-              echo "0 Results";
+              return $filtrer;
             }
             ?>
           </table>
+          
         </div>
       </div>
-     </div>
-
-        <!-- EDIT POP UP FORM (Bootstrap MODAL) -->
-        <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  </div>
+     <!-- EDIT POP UP FORM (Bootstrap MODAL) -->
+     <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -273,11 +351,12 @@ if (isset($_POST['Submit'])){
     </div>
 
     <script src="./index.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    
     <script>
         $(document).ready(function () {
 
@@ -309,6 +388,7 @@ if (isset($_POST['Submit'])){
             });
         });
     </script>
-
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   </body>
 </html>
