@@ -9,14 +9,14 @@ if (!isset($_SESSION['username'])) {
 
 if(isset($_POST['updatedata'])){
 
-    $id = $_POST['update_id'];
+    $id = $_POST['update_idn'];
     $type = $_POST['typeD'];
     $nom = $_POST['NomD'];
     $milli = $_POST['MilligrammeD'];
     $prix = $_POST['PrixD'];
     $dispo = $_POST['DispoD'];
 
-        $query = "UPDATE medicament SET Type='$type', Nom='$nom', Miligramme='$milli', Prix=' $prix', Disponible=' $dispo' WHERE Med_Id='$id'  ";
+        $query = "UPDATE medicament SET Type='$type', Nom='$nom', Miligramme='$milli', Prix='$prix', Disponible='$dispo' WHERE Med_Id='$id'  ";
         $query_run = mysqli_query($mysqli, $query);
 
         if($query_run)
