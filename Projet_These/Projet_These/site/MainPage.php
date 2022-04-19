@@ -75,6 +75,9 @@ if (isset($_POST['Submit'])){
               $pharmname = $row["Name"];
               $pharmPhone1 = $row["Contact_Number1"];
               $pharmPhone2 = $row["Contact_Number2"];
+              if ($pharmPhone2 == "0000000000"){
+                $pharmPhone2 = "";
+              }
               $pharmLocation = $row["Location"];
               $pharmEmail = $row["Email"];
             }
@@ -83,23 +86,23 @@ if (isset($_POST['Submit'])){
   <form action="informations.php" method="POST">
         <div class="form-group">
            <label for="nameInput">Nom de pharmacie:</label>
-           <input type="text" name="pharmName" class="form-control" id="nameInput" placeholder="Enter Name" value="<?= $pharmname ?>">
+           <input type="text" name="pharmName" class="form-control" id="nameInput" placeholder="Tapez Le Nom" required value="<?= $pharmname ?>">
         </div>
      <div class="form-group">
-          <label for="InputNumber1">Contact Number1:</label>
-          <input type="Number" name="pharmNum1" class="form-control" id="InputNumber1" placeholder="Contact Number1" value="<?= $pharmPhone1 ?>">
+          <label for="InputNumber1">Numero de telephone 1:</label>
+          <input type="Number" name="pharmNum1" class="form-control" id="InputNumber1" placeholder="Tapez Le Numero de Telephone 1" required value="<?= $pharmPhone1 ?>">
     </div>
     <div class="form-group">
-          <label for="InputNumber2">Contact Number2:</label>
-          <input type="Number" name="pharmNum2" class="form-control" id="InputNumber2" placeholder="Contact Number2" value="<?= $pharmPhone2 ?>">
+          <label for="InputNumber2">Numero de telephone 2:</label>
+          <input type="Number" name="pharmNum2" class="form-control" id="InputNumber2" placeholder="Tapez Le Numero de Telephone 2 (optionnel)" value="<?= $pharmPhone2 ?>">
     </div>
     <div class="form-group">
           <label for="Adresse">Adresse:</label>
-          <input type="text" name="pharmAdr" class="form-control" id="Adresse" placeholder="Tapez l'adresse" value="<?= $pharmLocation ?>">
+          <input type="text" name="pharmAdr" class="form-control" id="Adresse" placeholder="Tapez l'Adresse" required value="<?= $pharmLocation ?>">
     </div>
     <div class="form-group">
     <label for="Email">Email:</label>
-    <input type="email" name="pharmEmail" class="form-control" id="Email" placeholder="Enter email" value="<?= $pharmEmail ?>">
+    <input type="email" name="pharmEmail" class="form-control" id="Email" placeholder="Tapez l'Email" required value="<?= $pharmEmail ?>">
   </div>
  
       </div>
@@ -404,10 +407,17 @@ if (isset($_POST['Submit'])){
 
                 console.log(data);
 
-                if (data[0] == "Medicament"){ $("#typeP1").prop("checked", true);}
-                else{$("#typeP2").prop("checked", true);}
+                if (data[0] == "Medicament"){ 
+                  $("#typeP1").prop("checked", true);
+                  $('#miliP').val(data[2]);
+                  $('#miliP').prop( "disabled", false);
+                }
+                else{
+                  $("#typeP2").prop("checked", true);
+                  $('#miliP').val(0);
+                  $('#miliP').prop( "disabled", true);
+                }
                 $('#NomP').val(data[1]);
-                $('#miliP').val(data[2]);
                 $('#PrixP').val(data[3]);
                 if(data[4] == "Oui"){
                   $("#typeD1").prop("checked", true);
@@ -416,6 +426,22 @@ if (isset($_POST['Submit'])){
                   $("#typeD2").prop("checked", true);
                 }
                 $('#update_id').val($(this).attr('id'));
+
+                var arr2 = document.querySelectorAll('input[name="typeD"]');
+                var field2 = document.getElementById("miliP");
+                  arr2.forEach((radio) => {
+                  radio.addEventListener("change", () => {
+                    if (radio.value == "Material Pharmaceutique") {
+                      field2.disabled = true;
+                      field2.style.backgroundColor = "#ccc";
+                      $('#miliP').val(0);
+                    } else {
+                      field2.disabled = false;
+                      field2.style.background = "transparent";
+                      $('#miliP').val(data[2]);
+                    }
+                  });
+                });
             });
         });
     </script>
