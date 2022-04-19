@@ -16,6 +16,10 @@ if(isset($_POST['EditInfo'])){
     $pharmAdr = $_POST['pharmAdr'];
     $pharmEmail = $_POST['pharmEmail'];
 
+    if ($pharmNum2 == ""){
+        $pharmNum2 = 0;
+    }
+
         $query = "UPDATE pharma_info SET Name='$pharmName', Contact_Number1	='$pharmNum1', Contact_Number2='$pharmNum2', Location='$pharmAdr', Email='$pharmEmail' WHERE Id='$id'";
         $query_run = mysqli_query($mysqli, $query);
 
