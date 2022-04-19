@@ -143,7 +143,7 @@ if (isset($_POST['Submit'])){
 
 
     <?php include './tableData.php' ?>;
-      
+   </div>  
     <?php include './edit.php' ?>
 
     <script src="./index.js"></script>
