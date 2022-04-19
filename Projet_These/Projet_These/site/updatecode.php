@@ -12,9 +12,14 @@ if(isset($_POST['updatedata'])){
     $id = $_POST['update_idn'];
     $type = $_POST['typeD'];
     $nom = $_POST['NomD'];
-    $milli = $_POST['MilligrammeD'];
     $prix = $_POST['PrixD'];
     $dispo = $_POST['DispoD'];
+
+    if($type == 'Material Pharmaceutique'){
+        $milli = 0;
+      }else{
+        $milli = $_POST['MilligrammeD'];
+      }
 
         $query = "UPDATE medicament SET Type='$type', Nom='$nom', Miligramme='$milli', Prix='$prix', Disponible='$dispo' WHERE Med_Id='$id'  ";
         $query_run = mysqli_query($mysqli, $query);
